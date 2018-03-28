@@ -1,0 +1,61 @@
+<!--
+WARNING: These targets are intended for building Microsoft's ASP.NET Core repos, and is not intended
+for use outside of Microsoft.
+
+Usage: this should be imported once via NuGet at the top of the file.
+
+-->
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)ApiCheck.props" />
+
+  <!-- common package options -->
+  <PropertyGroup>
+    <Authors>Microsoft</Authors>
+    <Company>Microsoft Corporation.</Company>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <IncludeSource>true</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/aspnet/Home/2.0.0/LICENSE.txt</PackageLicenseUrl>
+    <PackageIconUrl>https://go.microsoft.com/fwlink/?LinkID=288859</PackageIconUrl>
+    <PackageProjectUrl>https://asp.net</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <Serviceable Condition="'$(Configuration)' == 'Release'">true</Serviceable>
+    <LangVersion Condition="'$(LangVersion)' == ''">7.2</LangVersion>
+    <!-- Instructs the compiler to use SHA256 instead of SHA1 when adding file hashes to PDBs. -->
+    <ChecksumAlgorithm>SHA256</ChecksumAlgorithm>
+    <!-- Suppress the message about using a preview version of .NET Core SDK. We are okay with this and don't need the warning. -->
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+  </PropertyGroup>
+
+  <!-- common build options -->
+  <PropertyGroup>
+    <!-- make disabling warnings opt-out -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- xUnit1004 = warns about skipped tests. Make this a non-fatal build warning. -->
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);xUnit1004</WarningsNotAsErrors>
+    <_TwoDigitYear>$([MSBuild]::Subtract($([System.DateTime]::UtcNow.Year), 2000))</_TwoDigitYear>
+    <_ThreeDigitDayOfYear>$([System.DateTime]::UtcNow.DayOfYear.ToString().PadLeft(3, '0'))</_ThreeDigitDayOfYear>
+    <AssemblyRevision>$(_TwoDigitYear)$(_ThreeDigitDayOfYear)</AssemblyRevision>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute" Condition="'$(BuildNumber)' != ''">
+      <_Parameter1>BuildNumber</_Parameter1>
+      <_Parameter2>$(BuildNumber)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- Detect this package inclusion. For use by other targets and properties. -->
+    <InternalAspNetCoreSdkImported>true</InternalAspNetCoreSdkImported>
+    <_BuildTasksPrefix>Sdk_</_BuildTasksPrefix>
+    <_BuildToolsAssemblyTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">netcoreapp2.0</_BuildToolsAssemblyTfm>
+    <_BuildToolsAssemblyTfm Condition="'$(MSBuildRuntimeType)' != 'Core'">net46</_BuildToolsAssemblyTfm>
+    <_BuildToolsAssembly>$(MSBuildThisFileDirectory)..\tools\$(_BuildToolsAssemblyTfm)\Internal.AspNetCore.Sdk.dll</_BuildToolsAssembly>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)BuildTools.Tasks.props" Condition="Exists('$(MSBuildThisFileDirectory)BuildTools.Tasks.props')"/>
+
+</Project>

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>.NET Core hosting and startup abstractions for applications.</Description>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageTags>hosting</PackageTags>
+    <EnableApiCheck>false</EnableApiCheck>
+    <RootNamespace>Microsoft.Extensions.Hosting</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Configuration\src\Config.Abstractions\Config.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\DependencyInjection\src\DI.Abstractions\DI.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\FileSystem\src\FS.Abstractions\FS.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Logging\src\Microsoft.Extensions.Logging.Abstractions\Microsoft.Extensions.Logging.Abstractions.csproj" />
+  </ItemGroup>
+  
+</Project>

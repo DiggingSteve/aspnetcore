@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>ASP.NET Core MVC features that enable globalization and localization of applications.
+Commonly used types:
+Microsoft.AspNetCore.Mvc.Localization.IHtmlLocalizer&lt;TResource&gt;
+Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer</Description>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageTags>aspnetcore;aspnetcoremvc;localization</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\DependencyInjection\src\DI\DI.csproj" />
+    <ProjectReference Include="..\..\..\Localization\src\Microsoft.AspNetCore.Localization\Microsoft.AspNetCore.Localization.csproj" />
+    <ProjectReference Include="..\..\..\Localization\src\Microsoft.Extensions.Localization\Microsoft.Extensions.Localization.csproj" />
+    <ProjectReference Include="..\Microsoft.AspNetCore.Mvc.Razor\Microsoft.AspNetCore.Mvc.Razor.csproj" />
+    <PackageReference Include="Microsoft.Extensions.PropertyHelper.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsPropertyHelperSourcesPackageVersion)" />
+  </ItemGroup>
+
+</Project>

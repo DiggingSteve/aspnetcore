@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <DisableSharedSources>true</DisableSharedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ExcludeFromTest Include="$(RepositoryRoot)test\ApiCheckBaseline*\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <KoreBuildModule Include="BuildTools.Tasks" />
+    <KoreBuildModule Include="BundledPackages" />
+    <KoreBuildModule Include="KoreBuild.Tasks" />
+    <KoreBuildModule Include="NuGetPackageVerifier" />
+  </ItemGroup>
+
+</Project>

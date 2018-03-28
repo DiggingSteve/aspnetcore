@@ -1,0 +1,45 @@
+<Project>
+  <PropertyGroup>
+    <HtmlAgilityPackPackageVersion>1.5.1</HtmlAgilityPackPackageVersion>
+    <MicrosoftDotNetPlatformAbstractionsVersion>2.0.0</MicrosoftDotNetPlatformAbstractionsVersion>
+    <MicrosoftNETCoreApp20PackageVersion>2.0.0</MicrosoftNETCoreApp20PackageVersion>
+    <MicrosoftNETCoreApp21PackageVersion>2.1.0-preview2-26308-01</MicrosoftNETCoreApp21PackageVersion>
+    <MicrosoftNETTestSdkPackageVersion>15.5.0</MicrosoftNETTestSdkPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>4.4.0</MicrosoftWin32RegistryPackageVersion>
+    <MonoCecilPackageVersion>0.10.0-beta6</MonoCecilPackageVersion>
+    <MoqPackageVersion>4.7.99</MoqPackageVersion>
+    <!-- This one is OK for console tools that bundle their own version of JSON.NET -->
+    <NewtonsoftJsonPackageVersion>10.0.1</NewtonsoftJsonPackageVersion>
+    <NuGetPackagingPackageVersion>4.3.0</NuGetPackagingPackageVersion>
+    <NuGetProjectModelPackageVersion>4.3.0</NuGetProjectModelPackageVersion>
+    <SystemCollectionsImmutablePackageVersion>1.4.0</SystemCollectionsImmutablePackageVersion>
+    <SystemReflectionMetadataPackageVersion>1.5.0</SystemReflectionMetadataPackageVersion>
+    <VSWherePackageVersion>2.2.7</VSWherePackageVersion>
+    <XunitPackageVersion>2.3.1</XunitPackageVersion>
+    <XunitRunnerVisualStudioPackageVersion>2.3.1</XunitRunnerVisualStudioPackageVersion>
+  </PropertyGroup>
+
+  <!--
+    Attempt to keep these mostly aligned with https://github.com/dotnet/cli/blob/master/build/DependencyVersions.props
+    and with the version of MSBuild used by KoreBuild.
+    MSBuild will prefer the assemblies that ship in the .NET Core SDK and MSbuild. The dependency versions here don't matter
+    as long as the version we compile for is binary compatible with what the .NET Core SDK uses.
+  -->
+  <PropertyGroup>
+    <MicrosoftBuildPackageVersion>15.6.0-preview-000054-1286830</MicrosoftBuildPackageVersion>
+    <MicrosoftBuildFrameworkPackageVersion>$(MicrosoftBuildPackageVersion)</MicrosoftBuildFrameworkPackageVersion>
+    <MicrosoftBuildUtilitiesCorePackageVersion>$(MicrosoftBuildPackageVersion)</MicrosoftBuildUtilitiesCorePackageVersion>
+    <MicrosoftBuildTasksCorePackageVersion>$(MicrosoftBuildPackageVersion)</MicrosoftBuildTasksCorePackageVersion>
+    <Tooling_NewtonsoftJsonPackageVersion>9.0.1</Tooling_NewtonsoftJsonPackageVersion>
+    <Tooling_NuGetBuildTasksPackageVersion>4.7.0-preview1-4846</Tooling_NuGetBuildTasksPackageVersion>
+  </PropertyGroup>
+
+  <!-- These are set to flow into RepoTasks.csproj -->
+  <PropertyGroup>
+    <MicrosoftBuildVersion>$(MicrosoftBuildPackageVersion)</MicrosoftBuildVersion>
+    <JsonInMSBuildVersion>$(Tooling_NewtonsoftJsonPackageVersion)</JsonInMSBuildVersion>
+    <NuGetInMSBuildVersion>$(Tooling_NuGetBuildTasksPackageVersion)</NuGetInMSBuildVersion>
+  </PropertyGroup>
+
+  <Import Project="$(DotNetPackageVersionPropsPath)" Condition=" '$(DotNetPackageVersionPropsPath)' != '' " />
+</Project>

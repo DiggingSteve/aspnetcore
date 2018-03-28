@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <description>Generates API baselines and detects breaking changes in APIs.</description>
+    <dependencies>
+      <group targetFramework=".NETStandard1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="build\**" target="build\" />
+    <file src="$publishDir$\net46\**" target="tools\net46\" />
+    <file src="$publishDir$\netcoreapp2.1\**" target="tools\netcoreapp2.1\" />
+    <file src="$taskBuildDir$\netstandard2.0\*.dll" target="tools\netstandard2.0\" />
+  </files>
+</package>

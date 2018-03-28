@@ -1,0 +1,96 @@
+<Project>
+
+  <PropertyGroup>
+    <_KoreBuildIntermediateDir>$(IntermediateDir)korebuild\</_KoreBuildIntermediateDir>
+    <_KoreBuildIntermediateDir>$([MSBuild]::NormalizeDirectory($(_KoreBuildIntermediateDir)))</_KoreBuildIntermediateDir>
+    <_KoreBuildOutDir>$(ArtifactsDir)korebuild\artifacts\$(Version)\</_KoreBuildOutDir>
+    <_ChannelOutDir>$(ArtifactsDir)korebuild\channels\$(KoreBuildChannel)\</_ChannelOutDir>
+    <KoreBuildArchiveFile>$(_KoreBuildOutDir)korebuild.$(Version).zip</KoreBuildArchiveFile>
+    <KoreBuildBadgeFile>$(_ChannelOutDir)badge.svg</KoreBuildBadgeFile>
+    <KoreBuildLatestTxtFile>$(_ChannelOutDir)latest.txt</KoreBuildLatestTxtFile>
+    <PrepareDependsOn>$(PrepareDependsOn);SetTeamCityBuildNumberToVersion</PrepareDependsOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ArtifactInfo Include="$(KoreBuildArchiveFile)">
+      <ArtifactType>ZipArchive</ArtifactType>
+    </ArtifactInfo>
+    <ArtifactInfo Include="$(KoreBuildLatestTxtFile)">
+      <ArtifactType>TextFile</ArtifactType>
+    </ArtifactInfo>
+    <ArtifactInfo Include="$(KoreBuildBadgeFile)">
+      <ArtifactType>SvgImage</ArtifactType>
+    </ArtifactInfo>
+  </ItemGroup>
+
+  <Target Name="ResolveRepositoryCommit" Condition="'$(RepositoryCommit)'==''" BeforeTargets="Prepare">
+
+    <GetGitCommitInfo WorkingDirectory="$(RepositoryRoot)"
+                      Condition="'$(RepositoryCommit)' == ''">
+      <Output TaskParameter="CommitHash" PropertyName="RepositoryCommit" />
+      <Output TaskParameter="Branch" PropertyName="RepositoryBranch" />
+    </GetGitCommitInfo>
+
+    <PropertyGroup>
+      <SolutionProperties Condition="'$(RepositoryCommit)' != ''">$(SolutionProperties);RepositoryCommit=$(RepositoryCommit)</SolutionProperties>
+      <SolutionProperties Condition="'$(RepositoryBranch)' != ''">$(SolutionProperties);RepositoryBranch=$(RepositoryBranch)</SolutionProperties>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CleanKoreBuild">
+    <RemoveDir Directories="$(_KoreBuildIntermediateDir);$(ArtifactsDir)korebuild\" />
+  </Target>
+
+  <Target Name="PackageKoreBuild" DependsOnTargets="ResolveRepositoryCommit;CleanKoreBuild" AfterTargets="Package">
+    <Error Text="Missing property: KoreBuildChannel" Condition="'$(KoreBuildChannel)' == ''" />
+    <Error Text="Missing property: Version" Condition="'$(Version)' == ''" />
+    <Error Text="Missing property: RepositoryCommit" Condition="'$(RepositoryCommit)' == ''" />
+
+    <!-- passing /warnaserror:BUILD1001 on CI to prevent channel/branch mismatch -->
+    <Warning Text="Current branch '$(RepositoryBranch)' does not match the value of KoreBuildChannel: '$(KoreBuildChannel)'"
+      Condition="'$(RepositoryBranch)' != '$(KoreBuildChannel)' AND '$(CI)' == 'true'"
+      Code="BUILD1001" />
+
+    <ItemGroup>
+      <_ToolsProjects Include="$(RepositoryRoot)tools\KoreBuild.Console\KoreBuild.Console.csproj">
+        <AdditionalProperties>PublishDir=$(_KoreBuildIntermediateDir)\tools\%(Identity)\</AdditionalProperties>
+      </_ToolsProjects>
+    </ItemGroup>
+
+    <MSBuild Targets="Publish"
+      Projects="@(_ToolsProjects)"
+      Properties="$(SolutionProperties)"
+      BuildInParallel="true" />
+
+    <ItemGroup>
+      <Content Include="$(RepositoryRoot)files\KoreBuild\**\*" />
+      <VersionFileLines Include="version:$(Version)" />
+      <VersionFileLines Include="commithash:$(RepositoryCommit)" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(_ChannelOutDir);$(_KoreBuildOutDir);$(_KoreBuildIntermediateDir)" />
+    <Copy SourceFiles="%(Content.Identity)" DestinationFiles="$(_KoreBuildIntermediateDir)\%(RecursiveDir)%(FileName)%(Extension)" />
+
+    <WriteLinesToFile File="$(_KoreBuildIntermediateDir).version" Lines="@(VersionFileLines)" Overwrite="true" />
+
+    <ItemGroup>
+      <_ModuleProjects Include="$(RepositoryRoot)modules\%(KoreBuildModule.Identity)\%(Identity).*proj">
+        <AdditionalProperties>PublishDir=$(_KoreBuildIntermediateDir)modules\%(Identity)\</AdditionalProperties>
+      </_ModuleProjects>
+    </ItemGroup>
+
+    <MSBuild Targets="Publish"
+      Projects="@(_ModuleProjects)"
+      Properties="$(SolutionProperties)"
+      BuildInParallel="true" />
+
+    <ItemGroup>
+      <KoreBuildFiles Include="$(_KoreBuildIntermediateDir)**\*" />
+    </ItemGroup>
+
+    <WriteLinesToFile File="$(KoreBuildLatestTxtFile)" Lines="@(VersionFileLines)" Overwrite="true"/>
+    <GenerateSvgBadge Label="version" Value="$(Version)" OutputPath="$(KoreBuildBadgeFile)" />
+    <ZipArchive WorkingDirectory="$(_KoreBuildIntermediateDir)" File="$(KoreBuildArchiveFile)" SourceFiles="@(KoreBuildFiles)" />
+  </Target>
+
+</Project>

@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>ASP.NET Core MVC Razor view engine for CSHTML files.</Description>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageTags>aspnetcore;aspnetcoremvc;cshtml;razor</PackageTags>
+    <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
+    <Serviceable>true</Serviceable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Caching\src\Microsoft.Extensions.Caching.Memory\Microsoft.Extensions.Caching.Memory.csproj" />
+    <ProjectReference Include="..\..\..\FileSystem\src\FS.Composite\FS.Composite.csproj" />
+    <ProjectReference Include="..\..\..\Razor\src\Microsoft.AspNetCore.Mvc.Razor.Extensions\Microsoft.AspNetCore.Mvc.Razor.Extensions.csproj" />
+    <ProjectReference Include="..\..\..\Razor\src\Microsoft.AspNetCore.Razor.Language\Microsoft.AspNetCore.Razor.Language.csproj" />
+    <ProjectReference Include="..\..\..\Razor\src\Microsoft.AspNetCore.Razor.Runtime\Microsoft.AspNetCore.Razor.Runtime.csproj" />
+    <ProjectReference Include="..\..\..\Razor\src\Microsoft.AspNetCore.Razor\Microsoft.AspNetCore.Razor.csproj" />
+    <ProjectReference Include="..\..\..\Razor\src\Microsoft.CodeAnalysis.Razor\Microsoft.CodeAnalysis.Razor.csproj" />
+    <ProjectReference Include="..\Microsoft.AspNetCore.Mvc.ViewFeatures\Microsoft.AspNetCore.Mvc.ViewFeatures.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.ClosedGenericMatcher.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsClosedGenericMatcherSourcesPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.PropertyHelper.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsPropertyHelperSourcesPackageVersion)" />
+  </ItemGroup>
+
+  <Target Name="PopulateNuspec" BeforeTargets="GenerateNuspec" DependsOnTargets="BuiltProjectOutputGroup;DocumentationProjectOutputGroup">
+
+    <PropertyGroup>
+      <NuspecProperties>
+        id=$(MSBuildProjectName);
+        version=$(PackageVersion);
+        authors=$(Authors);
+        licenseUrl=$(PackageLicenseUrl);
+        projectUrl=$(PackageProjectUrl);
+        iconUrl=$(PackageIconUrl);
+        copyright=$(Copyright);
+        description=$(Description);
+        tags=$([MSBuild]::Escape($(PackageTags)));
+        serviceable=$(Serviceable);
+        repositoryUrl=$(RepositoryUrl);
+        targetframework=$(TargetFramework);
+        MicrosoftAspNetCoreMvcRazorExtensionsPackageVersion=$(MicrosoftAspNetCoreMvcRazorExtensionsPackageVersion);
+        MicrosoftAspNetCoreRazorRuntimePackageVersion=$(MicrosoftAspNetCoreRazorRuntimePackageVersion);
+        MicrosoftCodeAnalysisRazorPackageVersion=$(MicrosoftCodeAnalysisRazorPackageVersion);
+        MicrosoftCodeAnalysisCSharpPackageVersion=$(MicrosoftCodeAnalysisCSharpPackageVersion);
+        MicrosoftExtensionsCachingMemoryPackageVersion=$(MicrosoftExtensionsCachingMemoryPackageVersion);
+        MicrosoftExtensionsFileProvidersCompositePackageVersion=$(MicrosoftExtensionsFileProvidersCompositePackageVersion);
+        MicrosoftDiaSymReaderNativePackageVersion=$(MicrosoftDiaSymReaderNativePackageVersion);
+        OutputBinary=@(BuiltProjectOutputGroupOutput);
+        OutputDocumentation=@(DocumentationProjectOutputGroupOutput)
+      </NuspecProperties>
+    </PropertyGroup>
+  </Target>
+</Project>
