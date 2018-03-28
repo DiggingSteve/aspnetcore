@@ -1,1 +1,1 @@
-# aspnetcore
+# 整合ASP.NET Core 2.0相关的源代码，方便查看源码和调试
