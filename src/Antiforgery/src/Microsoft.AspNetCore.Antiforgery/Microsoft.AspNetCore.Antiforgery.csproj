@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildTools\src\Internal.AspNetCore.Sdk\Internal.AspNetCore.Sdk.csproj" />
     <ProjectReference Include="..\..\..\Common\src\Microsoft.Extensions.ObjectPool\Microsoft.Extensions.ObjectPool.csproj" />
     <ProjectReference Include="..\..\..\DataProtection\src\Microsoft.AspNetCore.DataProtection\Microsoft.AspNetCore.DataProtection.csproj" />
     <ProjectReference Include="..\..\..\HttpAbstractions\src\Microsoft.AspNetCore.Http.Abstractions\Microsoft.AspNetCore.Http.Abstractions.csproj" />

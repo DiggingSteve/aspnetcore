@@ -25,8 +25,4 @@ Microsoft.Extensions.Primitives.StringSegment</Description>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafePackageVersion)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildTools\src\Internal.AspNetCore.Sdk\Internal.AspNetCore.Sdk.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -33,9 +33,6 @@ Microsoft.AspNetCore.Mvc.RouteAttribute</Description>
     <ProjectReference Include="..\..\..\Security\src\Microsoft.AspNetCore.Authorization.Policy\Microsoft.AspNetCore.Authorization.Policy.csproj" />
     <ProjectReference Include="..\Microsoft.AspNetCore.Mvc.Abstractions\Microsoft.AspNetCore.Mvc.Abstractions.csproj" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MicrosoftExtensionsDependencyModelPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.ParameterDefaultValue.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsParameterDefaultValueSourcesPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.SecurityHelper.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsSecurityHelperSourcesPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.ValueStopwatch.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsValueStopwatchSourcesPackageVersion)" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="$(SystemDiagnosticsDiagnosticSourcePackageVersion)" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsPackageVersion)" />
   </ItemGroup>

@@ -11,6 +11,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\JsonPatch\src\Microsoft.AspNetCore.JsonPatch\Microsoft.AspNetCore.JsonPatch.csproj" />
     <ProjectReference Include="..\Microsoft.AspNetCore.Mvc.Core\Microsoft.AspNetCore.Mvc.Core.csproj" />
-    <PackageReference Include="Microsoft.Extensions.ClosedGenericMatcher.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsClosedGenericMatcherSourcesPackageVersion)" />
   </ItemGroup>
 </Project>

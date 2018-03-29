@@ -18,6 +18,5 @@
     <ProjectReference Include="..\..\..\FileSystem\src\FS.Globbing\FS.Globbing.csproj" />
     <ProjectReference Include="..\..\..\Routing\src\Microsoft.AspNetCore.Routing.Abstractions\Microsoft.AspNetCore.Routing.Abstractions.csproj" />
     <ProjectReference Include="..\Microsoft.AspNetCore.Mvc.Razor\Microsoft.AspNetCore.Mvc.Razor.csproj" />
-    <PackageReference Include="Microsoft.Extensions.PropertyHelper.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsPropertyHelperSourcesPackageVersion)" />
   </ItemGroup>
 </Project>

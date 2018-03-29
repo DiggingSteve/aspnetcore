@@ -16,7 +16,6 @@ Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer</Description>
     <ProjectReference Include="..\..\..\Localization\src\Microsoft.AspNetCore.Localization\Microsoft.AspNetCore.Localization.csproj" />
     <ProjectReference Include="..\..\..\Localization\src\Microsoft.Extensions.Localization\Microsoft.Extensions.Localization.csproj" />
     <ProjectReference Include="..\Microsoft.AspNetCore.Mvc.Razor\Microsoft.AspNetCore.Mvc.Razor.csproj" />
-    <PackageReference Include="Microsoft.Extensions.PropertyHelper.Sources" PrivateAssets="All" Version="$(MicrosoftExtensionsPropertyHelperSourcesPackageVersion)" />
   </ItemGroup>
 
 </Project>
